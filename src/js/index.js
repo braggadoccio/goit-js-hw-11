@@ -62,7 +62,7 @@ function renderGallery(hits) {
 
   galleryElement.insertAdjacentHTML('beforeend', markup);
 
-  // Make smooth page scrolling after the request and rendering each next group of images
+  // Smooth page scrolling //
   const { height: cardHeight } = document
     .querySelector('.gallery')
     .firstElementChild.getBoundingClientRect();
@@ -72,7 +72,7 @@ function renderGallery(hits) {
     behavior: 'smooth',
   });
 
-  //   If the user has reached the end of the collection
+  //   ReachEnd
   if (options.params.page * options.params.per_page >= totalHits) {
     if (!reachedEnd) {
       Notify.info("We're sorry, but you've reached the end of search results.");
@@ -110,8 +110,8 @@ async function handleSubmit(e) {
       renderGallery(hits);
     }
     searchInputElement.value = '';
-  } catch (err) {
-    Notify.failure(err);
+  } catch (error) {
+    Notify.failure(error);
   }
 }
 
@@ -125,8 +125,8 @@ async function loadMore() {
     const response = await axios.get(BASE_URL, options);
     const hits = response.data.hits;
     renderGallery(hits);
-  } catch (err) {
-    Notify.failure(err);
+  } catch (error) {
+    Notify.failure(error);
   }
 }
 
