@@ -8,12 +8,17 @@ import { BASE_URL, options } from './pixabay-api.js';
 const galleryElement = document.querySelector('.gallery');
 const searchInputElement = document.querySelector('input[name="searchQuery"]');
 const searchFormElement = document.getElementById('search-form');
+const loadMoreButton = document.querySelector('.load-more');
 
 // Instantiate SimpleLightBox //
 const lightbox = new simpleLightbox('.lightbox', {
   captionData: 'alt',
   captionDelay: 250,
 });
+
+loadMoreButton.classList.add('is-hidden');
+
+// const { BASE_URL, options } = new apiServicePixabay();
 
 ///////////////////////////////////////////////////////////////
 let totalHits = 0;
@@ -63,6 +68,7 @@ function renderGallery(hits) {
   galleryElement.insertAdjacentHTML('beforeend', markup);
 
   // Smooth page scrolling //
+
   const { height: cardHeight } = document
     .querySelector('.gallery')
     .firstElementChild.getBoundingClientRect();
@@ -72,11 +78,15 @@ function renderGallery(hits) {
     behavior: 'smooth',
   });
 
+  loadMoreButton.classList.remove('is-hidden');
+  // scroll(totalHits);
+
   //   ReachEnd
   if (options.params.page * options.params.per_page >= totalHits) {
     if (!reachedEnd) {
       Notify.info("We're sorry, but you've reached the end of search results.");
       reachedEnd = true;
+      loadMoreButton.classList.add('is-hidden');
     }
   }
   lightbox.refresh();
@@ -130,7 +140,7 @@ async function loadMore() {
   }
 }
 
-function handleScroll() {
+function onloadMoreButton() {
   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
   if (scrollTop + clientHeight >= scrollHeight) {
@@ -138,4 +148,4 @@ function handleScroll() {
   }
 }
 
-window.addEventListener('scroll', handleScroll);
+loadMoreButton.addEventListener('click', onloadMoreButton);
