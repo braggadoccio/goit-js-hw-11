@@ -73,10 +73,10 @@ function renderGallery(hits) {
     .querySelector('.gallery')
     .firstElementChild.getBoundingClientRect();
 
-  window.scrollBy({
-    top: cardHeight * 2,
-    behavior: 'smooth',
-  });
+  // window.scrollBy({
+  //   top: cardHeight * 2,
+  //   behavior: 'smooth',
+  // });
 
   loadMoreButton.classList.remove('is-hidden');
   // scroll(totalHits);
